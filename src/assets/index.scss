@@ -6,7 +6,7 @@ html {
 }
 
 body {
-  font-family: 'SFProDisplay', sans-serif;
+  font-family: 'SF Pro Display', sans-serif;
   font-size: $sp_base_font_size;
   line-height: $sp_base_line_height;
   font-weight: normal;
@@ -37,10 +37,6 @@ html {
 a {
   color: $text_color;
   text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
-  }
 }
 
 a,
@@ -69,7 +65,7 @@ td {
 h1,
 h2,
 h3 {
-  font-family: 'SFProDisplay', sans-serif;
+  font-family: 'SF Pro Display', sans-serif;
   color: $text_color;
 }
 
