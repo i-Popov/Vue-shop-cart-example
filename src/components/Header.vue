@@ -1,0 +1,53 @@
+<template>
+  <header class="header">
+    <nav class="nav">
+      <ul class="nav-links">
+        <li class="link">
+          <router-link to="/">Каталог</router-link>
+        </li>
+        <li class="link">
+          <router-link to="/about">О нас</router-link>
+        </li>
+      </ul>
+    </nav>
+    <slot></slot>
+  </header>
+</template>
+
+<script>
+export default {
+};
+</script>
+
+<style lang="scss" scoped>
+  .header {
+    width: 100%;
+    height: 80px;
+    background-color: #333333;
+    box-sizing: border-box;
+    padding: .5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .nav {
+    width: 600px;
+  }
+
+  .nav-links {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .link {
+    list-style: none;
+    padding: 0 2em;
+  }
+
+  .link a {
+    color: #fff;
+    text-decoration: none;
+  }
+</style>

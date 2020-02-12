@@ -1,0 +1,119 @@
+@import "./resources";
+@import "./fonts/index";
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'SFProDisplay', sans-serif;
+  font-size: $sp_base_font_size;
+  line-height: $sp_base_line_height;
+  font-weight: normal;
+  color: $text_color;
+  //height: 100%;
+  width: 100%;
+
+  @media (min-width: $tb_bp) {
+    font-size: $tb_base_font_size;
+    line-height: $tb_base_line_height;
+  }
+  @media (min-width: $dt_bp) {
+    font-size: $dt_base_font_size;
+    line-height: $dt_base_line_height;
+  }
+}
+
+#__next,
+html {
+  //height: 100%;
+  width: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: $text_color;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+a,
+button {
+  outline: none;
+}
+
+a,
+p,
+li,
+td {
+  font-size: $sp_base_font_size;
+  line-height: $sp_base_line_height;
+  font-weight: normal;
+
+  @media (min-width: $tb_bp) {
+    font-size: $tb_base_font_size;
+    line-height: $tb_base_line_height;
+  }
+  @media (min-width: $dt_bp) {
+    font-size: $dt_base_font_size;
+    line-height: $dt_base_line_height;
+  }
+}
+
+h1,
+h2,
+h3 {
+  font-family: 'SFProDisplay', sans-serif;
+  color: $text_color;
+}
+
+h1 {
+  font-size: $sp_h1_font_size;
+  font-weight: bold;
+  line-height: $sp_h1_line_height;
+
+  @media (min-width: $sp_bp) {
+    font-size: $tb_h1_font_size;
+    line-height: $tb_h1_line_height;
+  }
+  @media (min-width: $tb_bp) {
+    font-size: $dt_h1_font_size;
+    line-height: $dt_h1_line_height;
+  }
+}
+
+h2 {
+  font-size: $sp_h2_font_size;
+  font-weight: bold;
+  line-height: $sp_h2_line_height;
+
+  @media (min-width: $sp_bp) {
+    font-size: $tb_h2_font_size;
+    line-height: $tb_h2_line_height;
+  }
+  @media (min-width: $tb_bp) {
+    font-size: $dt_h2_font_size;
+    line-height: $dt_h2_line_height;
+  }
+}
+
+h3 {
+  font-size: $sp_h3_font_size;
+  font-weight: 500;
+  line-height: $sp_h3_line_height;
+
+  @media (min-width: $sp_bp) {
+    font-size: $tb_h3_font_size;
+    line-height: $tb_h3_line_height;
+  }
+  @media (min-width: $tb_bp) {
+    font-size: $dt_h3_font_size;
+    line-height: $dt_h3_line_height;
+  }
+}
