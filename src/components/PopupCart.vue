@@ -5,7 +5,7 @@
       <img :src="product.img" alt="" class="item-thumb">
       <h3 class="item-name">{{ product.title }}</h3>
       <span class="item-amount">Количество: 1</span>
-      <span class="item-price">{{ product.cost }} ₽</span>
+      <span class="item-price">{{ product.cost.toLocaleString() }} ₽</span>
     </div>
     <div class="cart-info" v-if="hasProduct()">
       <span>Всего: {{ totalPrice().toLocaleString() }} ₽</span>
@@ -55,7 +55,7 @@ export default {
     width: 400px;
     height: auto;
     background-color: #FAFAFA;
-    box-shadow: 0px 0px 10px rgba(73, 74, 78, 0.1);
+    box-shadow: 0 0 10px rgba(73, 74, 78, 0.1);
     border-radius: 5px;
     box-sizing: border-box;
     padding: 1em .5em;

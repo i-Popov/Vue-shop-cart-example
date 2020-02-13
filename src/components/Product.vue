@@ -33,13 +33,9 @@ export default {
   methods: {
     ...mapActions([
       'addProduct',
-      'showOrHiddenModal',
     ]),
     addProductToCart(product) {
       this.addProduct(product);
-    },
-    openModal() {
-      this.showOrHiddenModal();
     },
   },
 

@@ -16,7 +16,7 @@
                 </div>
                 <div class="cartBox__price">
                   <div class="cartBox__price__item">
-                    Цвет<span class="color" v-for="color in product.colors" :key="color" :style="'background:'+color"></span>
+                    Цвет<span class="color" v-for="color in product.color" :key="color" :style="'background:'+color"></span>
                   </div>
                   <div class="cartBox__price__item">
                     {{ product.cost.toLocaleString() }} ₽

@@ -16,8 +16,7 @@
         </div>
       </div>
     </section>
-    <section class="filter"></section>
-    <ProductsList :products="getAllProducts"/>
+    <ProductsList :products="getAllProducts" :colors="getAllColors"/>
   </div>
 </template>
 
@@ -32,6 +31,7 @@ export default {
   computed: {
     ...mapGetters([
       'getAllProducts',
+      'getAllColors',
     ]),
   },
 };
@@ -77,12 +77,6 @@ export default {
         margin: 22px 0;
       }
     }
-  }
-
-  .filter {
-    height: 100px;
-    width: 100%;
-    background-color: $secondary_color2;
   }
 </style>
 

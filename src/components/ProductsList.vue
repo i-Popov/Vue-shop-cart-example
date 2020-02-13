@@ -1,54 +1,100 @@
 <template>
-  <section class="products">
-    <div class="products__container">
-      <div class="product" v-for="(product, index) in products" :key="index">
-        <div class="product__img">
-          <img :src="product.img" alt="">
+  <div>
+    <section class="filter">
+      <div class="filter__container">
+        <h2>Выберите параметры</h2>
+        <div class="filter__box">
+          <span>Цвет</span>
+          <a href="#"
+             class="filter__color"
+             v-for='color in colors'
+             :class="{selected: isActive(color)}"
+             @click.prevent="setActive(color)"
+             :style="'background:'+color"></a>
         </div>
-        <router-link to="/product-details">
-          <h3 class="product__title" @click="addCurrentProduct(product)">
-            {{ product.title }}
-          </h3>
-        </router-link>
-        <div class="product__description">
-          {{ product.description }}
-        </div>
-        <div class="product__price">
-          <div class="product__price__item">
-            Цвета<span
-                  class="color"
-                  v-for="color in product.colors"
-                  :key="color"
-                  :style="'background:'+color"></span>
-          </div>
-          <div class="product__price__item">
-            {{ product.cost.toLocaleString() }} ₽
-          </div>
-        </div>
-        <Button class="product__button" @click.native="addProductToCart(product)">
-          В корзину
-        </Button>
       </div>
-    </div>
-  </section>
+    </section>
+    <section class="products">
+      <div class="products__container">
+        <h3 v-if='filteredItems.length === 0'>Товар не найден</h3>
+        <div class="product" v-for="(product, index) in filteredItems" :key="index">
+          <div class="product__img">
+            <img :src="product.img" alt="">
+          </div>
+          <router-link to="/product-details">
+            <h3 class="product__title" @click="addCurrentProduct(product)">
+              {{ product.title }}
+            </h3>
+          </router-link>
+          <div class="product__description">
+            {{ product.description }}
+          </div>
+          <div class="product__price">
+            <div class="product__price__item">
+              Цвета<span
+                    class="color"
+                    v-for="color in product.color"
+                    :key="color"
+                    :style="'background:'+color"></span>
+            </div>
+            <div class="product__price__item">
+              {{ product.cost.toLocaleString() }} ₽
+            </div>
+          </div>
+          <Button class="product__button" @click.native="addProductToCart(product)">
+            В корзину
+          </Button>
+        </div>
+      </div>
+    </section>
+  </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import Button from './Button';
 
 export default {
-  props: ['products'],
+  props: ['products', 'colors'],
 
   components: {
     Button,
   },
+
+  computed: {
+    ...mapGetters([
+      'getFiltersApplied',
+    ]),
+
+    filteredItems() {
+      return this.products.filter(product => {
+        return this.getFiltersApplied.every(filterApplied => {
+          if (product.color.includes(filterApplied)) {
+            return product.color.includes(filterApplied);
+          }
+        });
+      });
+    },
+  },
+
   methods: {
     ...mapActions([
       'addProduct',
       'currentProduct',
+      'onFilter',
+      'offFilter',
     ]),
 
+    setActive(product) {
+      if (this.getFiltersApplied.indexOf(product) > -1) {
+        this.offFilter(product);
+      } else {
+        this.onFilter(product);
+      }
+    },
+    isActive(menuItem) {
+      return this.getFiltersApplied.indexOf(menuItem) > -1;
+    },
     addProductToCart(product) {
       this.addProduct(product);
     },
@@ -61,13 +107,57 @@ export default {
 
 <style lang="scss" scoped>
 @import "../assets/resources";
-
-  .products {
+  .filter {
+    height: 100px;
     width: 100%;
+    background-color: $secondary_color2;
+    display: flex;
+    align-items: center;
 
     &__container {
       width: 100%;
       padding: 0 20px;
+      margin: 0 auto;
+      display: flex;
+
+      @media (min-width: $tb_bp) {
+        max-width: 1200px;
+      }
+    }
+
+    &__box {
+      display: flex;
+      align-items: center;
+      padding-left: 107px;
+      span {
+        padding-right: 16px;
+      }
+    }
+
+    &__color {
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      margin: 5px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: inline-block;
+      transition: .3s all;
+
+      &:hover,
+      &.selected {
+        background: rgba(0, 0, 0, 0.2);
+        box-shadow: inset 0 0 0 3px rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+
+  .products {
+    width: 100%;
+    min-height: calc(100vh - 667px);
+
+    &__container {
+      width: 100%;
+      padding: 50px 20px;
       margin: 0 auto;
       display: flex;
       align-items: stretch;

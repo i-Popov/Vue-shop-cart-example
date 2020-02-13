@@ -12,7 +12,7 @@ export default new Vuex.Store({
         img: require('./assets/images/item-1.jpg'),
         title: 'Обеденный стол Renno 100 см',
         description: 'Обеденный стол Renno от Storeforhome стильное решение для вашего пространства. ',
-        colors: ['black', 'white'],
+        color: ['black', 'white'],
         cost: 24500,
       },
       {
@@ -21,7 +21,7 @@ export default new Vuex.Store({
         img: require('./assets/images/item-2.jpg'),
         title: 'Стул Elbert голубая ткань',
         description: 'С белой тканью тоже есть.',
-        colors: ['blue', 'white'],
+        color: ['blue', 'white'],
         cost: 9990,
       },
       {
@@ -30,7 +30,7 @@ export default new Vuex.Store({
         img: require('./assets/images/item-3.jpg'),
         title: 'Угловой диван Vario',
         description: 'Для создания комфортной домашней обстановки. Отличается простотой и лаконичным дизайном.',
-        colors: ['black', 'white'],
+        color: ['black', 'white'],
         cost: 8500,
       },
       {
@@ -39,7 +39,7 @@ export default new Vuex.Store({
         img: require('./assets/images/item-4.jpg'),
         title: 'Книжный шкаф Stanmore',
         description: 'Шкаф имеет как открытые , так и закрытые, что позволяет сделать весьма удобную расстановку.',
-        colors: ['white'],
+        color: ['white'],
         cost: 45800,
       },
       {
@@ -48,7 +48,7 @@ export default new Vuex.Store({
         img: require('./assets/images/item-5.jpg'),
         title: 'Кресло Swan красное',
         description: 'Кресло Swan Chair — культовая модель кресла, название которой переводится как «лебедь».',
-        colors: ['red', 'white', 'black'],
+        color: ['red', 'white', 'black'],
         cost: 22350,
       },
       {
@@ -57,27 +57,25 @@ export default new Vuex.Store({
         img: require('./assets/images/item-6.jpg'),
         title: 'Пенёк',
         description: 'Небольшая часть ствола дерева. Пень может быть как ещё живым, так и мёртвым',
-        colors: ['black'],
+        color: ['black'],
         cost: 1000,
       },
     ],
 
     cartProducts: [],
+    filtersApplied: [],
     currentProduct: {},
-    showModal: false,
     showPopupCart: false,
-    minCost: 1000,
-    maxCost: 46000,
+    colors: ['black', 'white', 'blue', 'red'],
   },
 
   getters: {
     getAllProducts: state => state.items,
+    getAllColors: state => state.colors,
     getProductsInCart: state => state.cartProducts,
+    getFiltersApplied: state => state.filtersApplied,
     getCurrentProduct: state => state.currentProduct,
-    getShowModal: state => state.showModal,
     getPopupCart: state => state.showPopupCart,
-    getMinCost: state => state.minCost,
-    getMaxCost: state => state.maxCost,
   },
 
   mutations: {
@@ -90,11 +88,14 @@ export default new Vuex.Store({
     CURRENT_PRODUCT: (state, product) => {
       state.currentProduct = product;
     },
-    SHOW_MODAL: (state) => {
-      state.showModal = !state.showModal;
-    },
     SHOW_POPUP_CART: (state) => {
       state.showPopupCart = !state.showPopupCart;
+    },
+    ON_FILTER: (state, product) => {
+      state.filtersApplied.push(product);
+    },
+    OFF_FILTER: (state) => {
+      state.filtersApplied.pop();
     },
   },
 
@@ -108,11 +109,14 @@ export default new Vuex.Store({
     currentProduct: (context, product) => {
       context.commit('CURRENT_PRODUCT', product);
     },
-    showOrHiddenModal: (context) => {
-      context.commit('SHOW_MODAL');
-    },
     showOrHiddenPopupCart: (context) => {
       context.commit('SHOW_POPUP_CART');
+    },
+    onFilter: (context, product) => {
+      context.commit('ON_FILTER', product);
+    },
+    offFilter: (context) => {
+      context.commit('OFF_FILTER');
     },
   },
 });
