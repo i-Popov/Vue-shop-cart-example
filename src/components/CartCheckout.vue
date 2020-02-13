@@ -1,23 +1,62 @@
 <template>
-  <div class="checkout-box">
-    <ul class="checkout-list">
-      <transition-group name="fade">
-      <li v-for="(product, index) in getProductsInCart" :key="index" class="checkout-product">
-        <img :src="product.img" alt="" class="product-image">
-        <h3 class="product-name">{{ product.title }}</h3>
-        <span class="product-price">{{ product.cost.toLocaleString() }} ₽</span>
-        <button class="product-remove" @click="remove(index)">X</button>
-      </li>
-      </transition-group>
-    </ul>
-    <div v-if="!hasProduct()" class="checkout-message">
-      <h3>Корзина пуста...</h3>
-      <router-link to="./">Вернитесь обратно к продуктам</router-link>
+  <section class="cart">
+    <div class="cart__container">
+      <div class="cartBox">
+        <div class="cartBox__list">
+          <transition-group name="fade">
+            <div v-for="(product, index) in getProductsInCart" :key="index" class="cartBox__product">
+              <div class="cartBox__img">
+                <img :src="product.img" alt="">
+              </div>
+              <div class="cartBox__about">
+                <div>
+                  <button class="cartBox__remove" @click="remove(index)"><img src="../assets/images/remove.svg" alt=""></button>
+                  <h3>{{ product.title }}</h3>
+                  <div class="cartBox__description">{{ product.description }}</div>
+                </div>
+                <div class="cartBox__price">
+                  <div class="cartBox__price__item">
+                    Цвет<span class="color" v-for="color in product.colors" :key="color" :style="'background:'+color"></span>
+                  </div>
+                  <div class="cartBox__price__item">
+                    {{ product.cost.toLocaleString() }} ₽
+                  </div>
+                </div>
+              </div>
+            </div>
+          </transition-group>
+        </div>
+        <div v-if="!hasProduct()" class="checkout-message">
+          <h3>Корзина пуста...</h3>
+          <router-link to="/">Нажмите, чтобы вернуться в каталог</router-link>
+        </div>
+      </div>
+      <div class="form" v-if="hasProduct()">
+        <h3>Оформление заказа</h3>
+        <div class="form__item">
+          <span>Кол-во</span>
+          <span>{{ getProductsInCart.length }}</span>
+        </div>
+        <div class="form__item">
+          <span>Доставка</span>
+          <span>Бесплатно</span>
+        </div>
+        <div class="form__item">
+          <span>Итого</span>
+          <span>{{ totalPrice().toLocaleString() }} ₽</span>
+        </div>
+        <form class="form__order" action="">
+          <label>
+            <input type="text" placeholder="ФИО">
+          </label>
+          <label>
+            <input type="text" placeholder="Номер телефона">
+          </label>
+          <button class="form__button">Заказать</button>
+        </form>
+      </div>
     </div>
-    <h3 class="total" v-if="hasProduct()">
-      Всего: {{ totalPrice().toLocaleString() }} ₽
-    </h3>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -49,67 +88,158 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .checkout-box {
+  @import "../assets/resources";
+  .cart {
     width: 100%;
-    max-width: 900px;
-    display: flex;
-    flex-direction: column;
-    margin: 50px auto;
-    box-sizing: border-box;
-    padding: 1em;
-  }
+    min-height: calc(100vh - 180px);
 
-  .checkout-list {
-    padding: 0;
-  }
+    &__container {
+      width: 100%;
+      padding: 80px 20px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
 
-  .checkout-product {
-    display: grid;
-    grid-template-columns: 1fr 3fr 2fr .5fr;
-    background-color: #fff;
-    box-shadow: 0px 0px 10px rgba(73, 74, 78, 0.1);
-    border-radius: 5px;
-    list-style: none;
-    box-sizing: border-box;
-    padding: .8em;
-    margin: 1em 0;
-  }
+      @media (min-width: $tb_bp) {
+        max-width: 1200px;
+        align-items: flex-start;
+        justify-content: space-between;
+        flex-direction: row;
+      }
+    }
 
-  .checkout-product * {
-    place-self: center;
-  }
-  .product-image {
-    grid-column: 1/2;
-    width: 50%;
-  }
+    .cartBox {
+      width: 100%;
+      max-width: 760px;
+      display: flex;
+      flex-direction: column;
 
-  .product-name {
-    box-sizing: border-box;
-  }
+      &__list {
+        padding: 0;
+      }
 
-  .product-price {
-    font-size: 1.2em;
-    font-weight: bold;
-  }
+      &__product {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        border-bottom: 1px solid #E5E5E5;
+        padding: 18px 0;
+        &:first-child {
+          border-top: 1px solid #E5E5E5;;
+        }
+      }
 
-  .product-remove {
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    border: 0;
-    background-color: #E0E0E0;
-    color: #fff;
-    cursor: pointer;
-  }
+      &__img img {
+        width: 100%;
+        max-width: 260px;
+      }
 
-  .total {
-    font-size: 2em;
-    font-weight: bold;
-    align-self: flex-end;
-  }
+      &__about {
+        width: 100%;
+        max-width: 360px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        h3 {
+          margin-bottom: 5px;
+        }
+      }
 
-  .checkout-message {
-    font-size: 1.5em;
+      &__remove {
+        position: absolute;
+        top: 10px;
+        right: 0;
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+        transition: 0.2s;
+        &:hover {
+          transform: scale(1.3);
+        }
+      }
+
+      &__description {
+        font-size: 16px;
+        line-height: 150%;
+        color: $text_color2;
+      }
+
+      &__price {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        &__item {
+          display: flex;
+          align-items: center;
+
+          &:last-child {
+            font-weight: 300;
+            font-size: 36px;
+            line-height: 100%;
+          }
+
+          .color {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            margin-left: 12px;
+          }
+        }
+      }
+    }
+
+
+    .form {
+      max-width: 360px;
+      width: 100%;
+      border: 1px solid #E5E5E5;
+      padding: 10px 30px;
+      display: flex;
+      flex-direction: column;
+
+      h3 {
+        text-align: center;
+        margin-bottom: 35px;
+      }
+
+      &__item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+
+      &__order {
+        display: flex;
+        flex-direction: column;
+
+        label {
+          padding-top: 11px;
+        }
+        input {
+          padding: 14px 15px;
+          width: 100%;
+          border: 1px solid $secondary_color;
+          &::placeholder {
+            color: $text_color2;
+          }
+        }
+      }
+
+      &__button {
+        cursor: pointer;
+        padding: 14px 0;
+        margin: 30px 0;
+        border: 1px solid $secondary_color;
+        background-color: transparent;
+        font-weight: 600;
+        font-size: 17px;
+      }
+    }
   }
 
   .fade-enter-active, .fade-leave-active {
