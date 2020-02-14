@@ -13,6 +13,10 @@
              @click.prevent="setActive(color)"
              :style="'background:'+color"></a>
         </div>
+        <div class="filter__box">
+          <input v-model.number="minPrice" type="number" />
+          <input v-model.number="maxPrice" type="number" />
+        </div>
       </div>
     </div>
     <div class="products">
@@ -53,10 +57,18 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
+import _ from 'lodash';
 import Button from './Button';
 
 export default {
   props: ['products', 'colors'],
+
+  data() {
+    return {
+      minPrice: 1000,
+      maxPrice: 46000,
+    };
+  },
 
   components: {
     Button,
@@ -68,9 +80,16 @@ export default {
     ]),
 
     filteredItems() {
-      return this.products.filter(product =>
-        this.getFiltersApplied.every(filterApplied =>
-          product.color.includes(filterApplied)));
+      return this.products
+
+        .filter(product => {
+          return this.getFiltersApplied.every(filterApplied =>
+            product.color.includes(filterApplied));
+        })
+
+        .filter(product => {
+          return Number(product.cost) >= this.minPrice && Number(product.cost) <= this.maxPrice;
+        });
     },
   },
 
@@ -81,6 +100,13 @@ export default {
       'onFilter',
       'offFilter',
     ]),
+
+    getMinPrice() {
+      return Number(_.minBy(this.products, 'cost').cost);
+    },
+    getMaxPrice() {
+      return Number(_.maxBy(this.products, 'cost').cost);
+    },
 
     setActive(product) {
       if (this.getFiltersApplied.indexOf(product) > -1) {

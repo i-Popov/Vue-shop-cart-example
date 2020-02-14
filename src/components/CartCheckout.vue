@@ -50,14 +50,17 @@
           <span>Итого</span>
           <span>{{ totalPrice().toLocaleString() }} ₽</span>
         </div>
-        <form class="form__order" action="">
+        <form class="form__order"  @submit="checkForm" action="#">
+          <ul v-if="errors.length">
+            <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
+          </ul>
           <label>
-            <input type="text" placeholder="ФИО">
+            <input type="text" name="name" id="name" v-model.trim="name" placeholder="ФИО">
           </label>
           <label>
-            <input type="text" placeholder="Номер телефона">
+            <input type="text" name="phone" id="phone" v-model.number.trim="phone" placeholder="Номер телефона">
           </label>
-          <button class="form__button">Заказать</button>
+          <button type="submit" value="Submit" class="form__button">Заказать</button>
         </form>
       </div>
     </div>
@@ -68,15 +71,23 @@
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
+  data() {
+    return {
+      errors: [],
+      name: null,
+      phone: null,
+    };
+  },
+
   computed: {
     ...mapGetters([
       'getProductsInCart',
     ]),
   },
-
   methods: {
     ...mapActions([
       'removeProduct',
+      'clearCartProducts',
     ]),
     hasProduct() {
       return this.getProductsInCart.length > 0;
@@ -87,6 +98,24 @@ export default {
     },
     remove(index) {
       this.removeProduct(index);
+    },
+    checkForm(e) {
+      e.preventDefault();
+      this.errors = [];
+      if (!this.name) {
+        this.errors.push('Поле "ФИО" обязательно для заполнения');
+        return;
+      } else if (!this.phone) {
+        this.errors.push('Поле "Номер телефона" обязательно для заполнения');
+        return;
+      } setTimeout(() => {
+        // eslint-disable-next-line no-alert
+        alert('Ваша заявка принята');
+        this.clearCartProducts();
+      }, 5000);
+    },
+    clear() {
+      this.clearCartProducts();
     },
   },
 };

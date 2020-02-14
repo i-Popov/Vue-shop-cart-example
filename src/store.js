@@ -67,8 +67,6 @@ export default new Vuex.Store({
     currentProduct: {},
     showPopupCart: false,
     colors: ['black', 'white', 'blue', 'red'],
-    // minPrice: 0,
-    // maxPrice: 0,
   },
 
   getters: {
@@ -101,6 +99,9 @@ export default new Vuex.Store({
     OFF_FILTER: (state, index) => {
       state.filtersApplied.splice(index, 1);
     },
+    CLEAR_CART: (state) => {
+      state.cartProducts = [];
+    },
   },
 
   actions: {
@@ -121,6 +122,9 @@ export default new Vuex.Store({
     },
     offFilter: (context, index) => {
       context.commit('OFF_FILTER', index);
+    },
+    clearCartProducts: (context, state) => {
+      context.commit('CLEAR_CART', state);
     },
   },
 });
