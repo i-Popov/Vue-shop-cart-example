@@ -58,6 +58,10 @@ export default {
       padding: 0 20px;
       margin: 0 auto;
 
+      @media (min-width: $sp_bp) {
+        max-width: 788px;
+      }
+
       @media (min-width: $tb_bp) {
         max-width: 1200px;
       }
@@ -65,11 +69,13 @@ export default {
 
     &__first {
       display: flex;
-      justify-content: center;
       min-height: 387px;
-      align-items: center;
+      flex-direction: column;
+      margin: 30px 0;
 
       @media (min-width: $tb_bp) {
+        flex-direction: row;
+        align-items: center;
         justify-content: space-between;
         margin-bottom: 30px;
       }
@@ -77,8 +83,11 @@ export default {
       &__title {
         width: 100%;
         max-width: 360px;
-        h1 {
-          margin: 0 0 48px;
+
+        @media (min-width: $tb_bp) {
+          h1 {
+            margin: 0 0 48px;
+          }
         }
       }
 
@@ -86,19 +95,26 @@ export default {
         width: 100%;
         max-width: 760px;
         padding-right: 26px;
+
         p {
-          line-height: 170%;
+          line-height: 140%;
           letter-spacing: 0.01px;
           margin: 22px 0;
+
+          @media (min-width: $sp_bp) {
+            line-height: 170%;
+          }
         }
       }
     }
 
     &__second {
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      padding-bottom: 60px;
 
       @media (min-width: $tb_bp) {
+        flex-direction: row;
         justify-content: space-between;
         padding-bottom: 110px;
       }
@@ -106,28 +122,47 @@ export default {
       &__title {
         width: 100%;
         max-width: 360px;
-        h1 {
-          margin: 0;
+
+        @media (min-width: $tb_bp) {
+          h1 {
+            margin: 0;
+          }
         }
       }
 
       &__description {
         width: 100%;
         max-width: 760px;
+
         p {
-          line-height: 170%;
+          line-height: 140%;
           letter-spacing: 0.01px;
           margin: 10px 0;
+
+          @media (min-width: $sp_bp) {
+            line-height: 170%;
+          }
         }
+
         .home {
-          margin-bottom: 53px;
+          @media (min-width: $sp_bp) {
+            margin-bottom: 53px;;
+          }
         }
+
         .fashion {
           display: flex;
+          flex-direction: column;
           justify-content: space-between;
+
+          @media (min-width: $sp_bp) {
+            flex-direction: row;
+          }
+
           &__item {
             width: 100%;
             max-width: 360px;
+
             p:first-child {
               color: $text_color2;
             }
@@ -137,4 +172,3 @@ export default {
     }
   }
 </style>
-

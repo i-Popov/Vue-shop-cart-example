@@ -67,6 +67,8 @@ export default new Vuex.Store({
     currentProduct: {},
     showPopupCart: false,
     colors: ['black', 'white', 'blue', 'red'],
+    // minPrice: 0,
+    // maxPrice: 0,
   },
 
   getters: {
@@ -76,6 +78,8 @@ export default new Vuex.Store({
     getFiltersApplied: state => state.filtersApplied,
     getCurrentProduct: state => state.currentProduct,
     getPopupCart: state => state.showPopupCart,
+    // getMinPrice: state => state.minPrice,
+    // getMaxPrice: state => state.maxPrice,
   },
 
   mutations: {
@@ -94,8 +98,8 @@ export default new Vuex.Store({
     ON_FILTER: (state, product) => {
       state.filtersApplied.push(product);
     },
-    OFF_FILTER: (state) => {
-      state.filtersApplied.pop();
+    OFF_FILTER: (state, index) => {
+      state.filtersApplied.splice(index, 1);
     },
   },
 
@@ -115,8 +119,8 @@ export default new Vuex.Store({
     onFilter: (context, product) => {
       context.commit('ON_FILTER', product);
     },
-    offFilter: (context) => {
-      context.commit('OFF_FILTER');
+    offFilter: (context, index) => {
+      context.commit('OFF_FILTER', index);
     },
   },
 });

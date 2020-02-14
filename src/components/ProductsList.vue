@@ -1,20 +1,21 @@
 <template>
-  <div>
-    <section class="filter">
+  <section>
+    <div class="filter">
       <div class="filter__container">
         <h2>Выберите параметры</h2>
         <div class="filter__box">
           <span>Цвет</span>
           <a href="#"
              class="filter__color"
-             v-for='color in colors'
+             v-for='(color, index) in colors'
+             :key="index"
              :class="{selected: isActive(color)}"
              @click.prevent="setActive(color)"
              :style="'background:'+color"></a>
         </div>
       </div>
-    </section>
-    <section class="products">
+    </div>
+    <div class="products">
       <div class="products__container">
         <h3 v-if='filteredItems.length === 0'>Товар не найден</h3>
         <div class="product" v-for="(product, index) in filteredItems" :key="index">
@@ -46,8 +47,8 @@
           </Button>
         </div>
       </div>
-    </section>
-  </div>
+    </div>
+  </section>
 </template>
 
 <script>
@@ -67,13 +68,9 @@ export default {
     ]),
 
     filteredItems() {
-      return this.products.filter(product => {
-        return this.getFiltersApplied.every(filterApplied => {
-          if (product.color.includes(filterApplied)) {
-            return product.color.includes(filterApplied);
-          }
-        });
-      });
+      return this.products.filter(product =>
+        this.getFiltersApplied.every(filterApplied =>
+          product.color.includes(filterApplied)));
     },
   },
 
@@ -92,8 +89,8 @@ export default {
         this.onFilter(product);
       }
     },
-    isActive(menuItem) {
-      return this.getFiltersApplied.indexOf(menuItem) > -1;
+    isActive(product) {
+      return this.getFiltersApplied.indexOf(product) > -1;
     },
     addProductToCart(product) {
       this.addProduct(product);

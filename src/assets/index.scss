@@ -11,7 +11,6 @@ body {
   line-height: $sp_base_line_height;
   font-weight: normal;
   color: $text_color;
-  //height: 100%;
   width: 100%;
 
   @media (min-width: $tb_bp) {
@@ -26,7 +25,6 @@ body {
 
 #__next,
 html {
-  //height: 100%;
   width: 100%;
 }
 

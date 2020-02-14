@@ -63,7 +63,7 @@ export default {
     height: 80px;
     display: flex;
     background-color: $primary_color;
-    border-bottom: 1px solid $header_border;
+    border-bottom: 1px solid $border_color;
 
     &__container {
         width: 100%;
@@ -104,6 +104,7 @@ export default {
     &__links {
         padding-left: 125px;
         height: 20px;
+
         li {
             display: inline-block;
             list-style: none;
@@ -112,6 +113,11 @@ export default {
             &:hover{
                 border-bottom: 1px solid $secondary_color;
             }
+        }
+
+        a.router-link-exact-active.router-link-active {
+            border-bottom: 1px solid;
+            padding-bottom: 3px;
         }
     }
 

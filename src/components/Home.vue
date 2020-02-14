@@ -1,11 +1,11 @@
 <template>
-  <div>
-    <section class="main">
-      <div class="main__container">
-        <div class="main__title">
+  <main>
+    <section class="catalog">
+      <div class="catalog__container">
+        <div class="catalog__title">
           <h1>Стиль<br>минимализм<br>в интерьере</h1>
         </div>
-        <div class="main__description">
+        <div class="catalog__description">
           <p>Английское слово minimalism ёмко и лаконично отражает суть одноимённого
             направления дизайна. Описание его концепции можно представить следующим
             образом: ясность, точность композиции, простота, сдержанное использование
@@ -17,7 +17,7 @@
       </div>
     </section>
     <ProductsList :products="getAllProducts" :colors="getAllColors"/>
-  </div>
+  </main>
 </template>
 
 <script>
@@ -40,7 +40,7 @@ export default {
 <style lang="scss" scoped>
   @import "../assets/resources";
 
-  .main {
+  .catalog {
     min-height: 387px;
     height: 100%;
     display: flex;

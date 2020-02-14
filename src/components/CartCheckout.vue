@@ -3,28 +3,33 @@
     <div class="cart__container">
       <div class="cartBox">
         <div class="cartBox__list">
-          <transition-group name="fade">
-            <div v-for="(product, index) in getProductsInCart" :key="index" class="cartBox__product">
-              <div class="cartBox__img">
-                <img :src="product.img" alt="">
+          <div v-for="(product, index) in getProductsInCart"
+               :key="index"
+               class="cartBox__product">
+            <div class="cartBox__img">
+              <img :src="product.img" alt="">
+            </div>
+            <div class="cartBox__about">
+              <div>
+                <button class="cartBox__remove" @click="remove(index)">
+                  <img src="../assets/images/remove.svg" alt="">
+                </button>
+                <h3>{{ product.title }}</h3>
+                <div class="cartBox__description">{{ product.description }}</div>
               </div>
-              <div class="cartBox__about">
-                <div>
-                  <button class="cartBox__remove" @click="remove(index)"><img src="../assets/images/remove.svg" alt=""></button>
-                  <h3>{{ product.title }}</h3>
-                  <div class="cartBox__description">{{ product.description }}</div>
+              <div class="cartBox__price">
+                <div class="cartBox__price__item">
+                  Цвет<span class="color"
+                            v-for="color in product.color"
+                            :key="color"
+                            :style="'background:'+color"></span>
                 </div>
-                <div class="cartBox__price">
-                  <div class="cartBox__price__item">
-                    Цвет<span class="color" v-for="color in product.color" :key="color" :style="'background:'+color"></span>
-                  </div>
-                  <div class="cartBox__price__item">
-                    {{ product.cost.toLocaleString() }} ₽
-                  </div>
+                <div class="cartBox__price__item">
+                  {{ product.cost.toLocaleString() }} ₽
                 </div>
               </div>
             </div>
-          </transition-group>
+          </div>
         </div>
         <div v-if="!hasProduct()" class="checkout-message">
           <h3>Корзина пуста...</h3>
@@ -113,9 +118,18 @@ export default {
 
     .cartBox {
       width: 100%;
-      max-width: 760px;
+      max-width: 400px;
       display: flex;
       flex-direction: column;
+      margin: 0 0 50px;
+
+      @media (min-width: $sp_bp) {
+        max-width: 760px;
+      }
+
+      @media (min-width: $tb_bp) {
+        margin: 0;
+      }
 
       &__list {
         padding: 0;
@@ -125,10 +139,16 @@ export default {
         display: flex;
         justify-content: space-between;
         position: relative;
-        border-bottom: 1px solid #E5E5E5;
+        border-bottom: 1px solid $border_color;
         padding: 18px 0;
+
         &:first-child {
-          border-top: 1px solid #E5E5E5;;
+          border-top: 1px solid $border_color;
+        }
+
+        @media (max-width: $sp_bp) {
+          align-items: center;
+          flex-direction: column;
         }
       }
 
@@ -143,6 +163,7 @@ export default {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+
         h3 {
           margin-bottom: 5px;
         }
@@ -156,6 +177,7 @@ export default {
         background-color: transparent;
         cursor: pointer;
         transition: 0.2s;
+
         &:hover {
           transform: scale(1.3);
         }
@@ -186,18 +208,17 @@ export default {
             width: 24px;
             height: 24px;
             border-radius: 50%;
-            border: 1px solid rgba(0, 0, 0, 0.2);
+            border: 1px solid $border_color2;
             margin-left: 12px;
           }
         }
       }
     }
 
-
     .form {
       max-width: 360px;
       width: 100%;
-      border: 1px solid #E5E5E5;
+      border: 1px solid $border_color;
       padding: 10px 30px;
       display: flex;
       flex-direction: column;
@@ -220,10 +241,12 @@ export default {
         label {
           padding-top: 11px;
         }
+
         input {
           padding: 14px 15px;
           width: 100%;
           border: 1px solid $secondary_color;
+
           &::placeholder {
             color: $text_color2;
           }
@@ -240,14 +263,5 @@ export default {
         font-size: 17px;
       }
     }
-  }
-
-  .fade-enter-active, .fade-leave-active {
-    transition: all .5s;
-  }
-
-  .fade-enter, .fade-leave-to {
-    transform: translateX(-40px);
-    opacity: 0;
   }
 </style>
