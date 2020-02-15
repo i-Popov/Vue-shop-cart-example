@@ -55,10 +55,18 @@
             <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
           </ul>
           <label>
-            <input type="text" name="name" id="name" v-model.trim="name" placeholder="ФИО">
+            <input type="text"
+                   name="name"
+                   id="name"
+                   v-model.trim="name"
+                   placeholder="ФИО">
           </label>
           <label>
-            <input type="number" name="phone" id="phone" v-model.number.trim="phone" placeholder="Номер телефона">
+            <input type="number"
+                   name="phone"
+                   id="phone"
+                   v-model.number.trim="phone"
+                   placeholder="Номер телефона">
           </label>
           <button type="submit" value="Submit" class="form__button">Заказать</button>
         </form>
