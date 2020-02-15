@@ -15,9 +15,13 @@
         </div>
         <div class="filter__box">
             <span class="filter__box__text2">Цена (₽)</span>
-          <input v-model.number="minPrice" type="number" />
+            <label>
+                <input v-model.number="minPrice" type="number" />
+            </label>
             <span class="filter__box__pad">–</span>
-          <input v-model.number="maxPrice" type="number"/>
+            <label>
+                <input v-model.number="maxPrice" type="number"/>
+            </label>
         </div>
       </div>
     </div>
@@ -73,8 +77,6 @@ export default {
       'getFiltersApplied',
       'getMinPrice',
       'getMaxPrice',
-      'getMinCost',
-      'getMaxCost',
     ]),
     minPrice: {
       get() {
@@ -96,14 +98,11 @@ export default {
     filteredItems() {
       return this.products
 
-        .filter(product => {
-          return this.getFiltersApplied.every(filterApplied =>
-            product.color.includes(filterApplied));
-        })
+        .filter(product => this.getFiltersApplied.every(filterApplied =>
+          product.color.includes(filterApplied)))
 
-        .filter(product => {
-          return Number(product.cost) >= this.minPrice && Number(product.cost) <= this.maxPrice;
-        });
+        .filter(product =>
+          Number(product.cost) >= this.minPrice && Number(product.cost) <= this.maxPrice);
     },
   },
 
@@ -140,50 +139,69 @@ export default {
 <style lang="scss" scoped>
 @import "../assets/resources";
   .filter {
-    height: 100px;
+    height: 250px;
     width: 100%;
     background-color: $secondary_color2;
     display: flex;
     align-items: center;
 
+    @media (min-width: $tb_bp) {
+        height: 100px;
+    }
+
     &__container {
       width: 100%;
       padding: 0 20px;
       margin: 0 auto;
+      flex-direction: column;
       display: flex;
+
+      @media (min-width: $sp_bp) {
+        max-width: 788px;
+      }
 
       @media (min-width: $tb_bp) {
         max-width: 1200px;
+        flex-direction: row;
       }
     }
 
     &__box {
       display: flex;
       align-items: center;
-      padding-left: 107px;
+      margin-bottom: 22px;
+
+      @media (min-width: $tb_bp) {
+        padding-left: 107px;
+        margin-bottom: 0;
+      }
 
         &__text1 {
-          padding-right: 16px;
+          padding-right: 58px;
+
+          @media (min-width: $tb_bp) {
+            padding-right: 16px;
+          }
         }
 
         &__text2 {
-            padding-right: 35px;
+          padding-right: 35px;
         }
 
         &__pad {
-            font-weight: 200;
-            padding: 10px;
+          font-weight: 200;
+          padding: 10px;
         }
 
         input {
-            width: 100px;
-            padding: 9px 8px;
-            background: $secondary_color2;
-            outline: none;
-            border: 1px solid $border_color3;
+          width: 100px;
+          padding: 9px 8px;
+          background: $secondary_color2;
+          outline: none;
+          border: 1px solid $border_color3;
 
             &::placeholder {
-                font-size: 18px;
+              font-size: 18px;
             }
         }
     }

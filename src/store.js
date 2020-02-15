@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import _ from 'lodash';
 
 Vue.use(Vuex);
 
@@ -81,16 +80,6 @@ export default new Vuex.Store({
     getPopupCart: state => state.showPopupCart,
     getMinPrice: state => state.minPrice,
     getMaxPrice: state => state.maxPrice,
-    getMinCost: (state) => {
-      return state.items.length
-        ? Number(_.minBy(state.items, 'cost').cost)
-        : 0;
-    },
-    getMaxCost: (state) => {
-      return state.items.length
-        ? Number(_.maxBy(state.items, 'cost').cost)
-        : 0;
-    },
   },
 
   mutations: {

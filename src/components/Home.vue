@@ -48,13 +48,20 @@ export default {
 
     &__container {
       width: 100%;
-      padding: 0 20px;
+      padding: 40px 20px;
       margin: 0 auto;
       display: flex;
       justify-content: center;
       position: relative;
+      flex-direction: column;
+
+      @media (min-width: $sp_bp) {
+        max-width: 788px;
+      }
 
       @media (min-width: $tb_bp) {
+        padding: 0 20px;
+        flex-direction: row;
         max-width: 1200px;
         justify-content: space-between;
       }
@@ -63,6 +70,7 @@ export default {
     &__title {
       width: 100%;
       max-width: 351px;
+
       h1 {
         margin: 10px 0;
       }
@@ -71,10 +79,17 @@ export default {
     &__description {
       width: 100%;
       max-width: 760px;
+
       p {
-        line-height: 170%;
+        line-height: 140%;
         letter-spacing: 0.01px;
         margin: 22px 0;
+      }
+
+      @media (min-width: $sp_bp) {
+        p {
+          line-height: 170%;
+        }
       }
     }
   }
