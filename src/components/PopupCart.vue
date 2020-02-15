@@ -1,6 +1,6 @@
 <template>
   <div class="box">
-    <span v-if="!hasProduct()">Нет товаров :/</span>
+    <span v-if="!hasProduct()">Для заказа выберите и добавьте товар в корзину</span>
     <div v-for="(product, index) in getProductsInCart"  :key="index" class="box-item">
       <img :src="product.img" alt="" class="item-thumb">
       <h3 class="item-name">{{ product.title }}</h3>

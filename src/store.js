@@ -68,8 +68,8 @@ export default new Vuex.Store({
     currentProduct: {},
     showPopupCart: false,
     colors: ['black', 'white', 'blue', 'red'],
-    minPrice: '',
-    maxPrice: '',
+    minPrice: 1000,
+    maxPrice: 46000,
   },
 
   getters: {
@@ -81,6 +81,16 @@ export default new Vuex.Store({
     getPopupCart: state => state.showPopupCart,
     getMinPrice: state => state.minPrice,
     getMaxPrice: state => state.maxPrice,
+    getMinCost: (state) => {
+      return state.items.length
+        ? Number(_.minBy(state.items, 'cost').cost)
+        : 0;
+    },
+    getMaxCost: (state) => {
+      return state.items.length
+        ? Number(_.maxBy(state.items, 'cost').cost)
+        : 0;
+    },
   },
 
   mutations: {
@@ -107,7 +117,6 @@ export default new Vuex.Store({
     },
     LOAD_MIN_PRICE: (state, payload) => {
       state.minPrice = payload;
-      // localStorage.setItem('name', state.minPrice);
     },
     LOAD_MAX_PRICE: (state, payload) => {
       state.maxPrice = payload;

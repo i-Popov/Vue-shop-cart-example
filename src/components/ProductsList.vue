@@ -4,7 +4,7 @@
       <div class="filter__container">
         <h2>Выберите параметры</h2>
         <div class="filter__box">
-          <span>Цвет</span>
+          <span class="filter__box__text1">Цвет</span>
           <a href="#"
              class="filter__color"
              v-for='(color, index) in colors'
@@ -14,8 +14,10 @@
              :style="'background:'+color"></a>
         </div>
         <div class="filter__box">
-          <input v-model.number="minPrice"/>
-          <input v-model.number="maxPrice" />
+            <span class="filter__box__text2">Цена (₽)</span>
+          <input v-model.number="minPrice" type="number" />
+            <span class="filter__box__pad">–</span>
+          <input v-model.number="maxPrice" type="number"/>
         </div>
       </div>
     </div>
@@ -62,13 +64,6 @@ import Button from './Button';
 export default {
   props: ['products', 'colors'],
 
-  // data() {
-  //   return {
-  //     minPrice: 1000,
-  //     maxPrice: 46000,
-  //   };
-  // },
-
   components: {
     Button,
   },
@@ -78,6 +73,8 @@ export default {
       'getFiltersApplied',
       'getMinPrice',
       'getMaxPrice',
+      'getMinCost',
+      'getMaxCost',
     ]),
     minPrice: {
       get() {
@@ -164,13 +161,35 @@ export default {
       display: flex;
       align-items: center;
       padding-left: 107px;
-      span {
-        padding-right: 16px;
-      }
+
+        &__text1 {
+          padding-right: 16px;
+        }
+
+        &__text2 {
+            padding-right: 35px;
+        }
+
+        &__pad {
+            font-weight: 200;
+            padding: 10px;
+        }
+
+        input {
+            width: 100px;
+            padding: 9px 8px;
+            background: $secondary_color2;
+            outline: none;
+            border: 1px solid $border_color3;
+
+            &::placeholder {
+                font-size: 18px;
+            }
+        }
     }
 
     &__color {
-      border: 1px solid rgba(0, 0, 0, 0.2);
+      border: 1px solid $border_color2;
       margin: 5px;
       width: 24px;
       height: 24px;
@@ -180,8 +199,8 @@ export default {
 
       &:hover,
       &.selected {
-        background: rgba(0, 0, 0, 0.2);
-        box-shadow: inset 0 0 0 3px rgba(0, 0, 0, 0.2);
+        background: $secondary_color3;
+        box-shadow: inset 0 0 0 3px $secondary_color3;
       }
     }
   }
@@ -210,7 +229,7 @@ export default {
     .product {
       width: 100%;
       max-width: 360px;
-      background-color: #fff;
+      background-color: $primary_color;
       list-style: none;
       box-sizing: border-box;
       display: flex;
@@ -259,11 +278,12 @@ export default {
             width: 24px;
             height: 24px;
             border-radius: 50%;
-            border: 1px solid rgba(0, 0, 0, 0.2);
+            border: 1px solid $border_color2;
             margin-left: 12px;
           }
         }
       }
+
       &__button {
         padding: 13px 0;
         background-color: $primary_color;

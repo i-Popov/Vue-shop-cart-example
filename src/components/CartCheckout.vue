@@ -58,7 +58,7 @@
             <input type="text" name="name" id="name" v-model.trim="name" placeholder="ФИО">
           </label>
           <label>
-            <input type="text" name="phone" id="phone" v-model.number.trim="phone" placeholder="Номер телефона">
+            <input type="number" name="phone" id="phone" v-model.number.trim="phone" placeholder="Номер телефона">
           </label>
           <button type="submit" value="Submit" class="form__button">Заказать</button>
         </form>
@@ -104,6 +104,9 @@ export default {
       this.errors = [];
       if (!this.name) {
         this.errors.push('Поле "ФИО" обязательно для заполнения');
+        return;
+      } else if (this.name.length < 10 || this.name.length > 50) {
+        this.errors.push('Имя должно содержать минимум 10 символов');
         return;
       } else if (!this.phone) {
         this.errors.push('Поле "Номер телефона" обязательно для заполнения');
@@ -272,6 +275,7 @@ export default {
         }
 
         input {
+          outline: none;
           padding: 14px 15px;
           width: 100%;
           border: 1px solid $secondary_color;
@@ -290,6 +294,12 @@ export default {
         background-color: transparent;
         font-weight: 600;
         font-size: 17px;
+        transition: 0.2s;
+
+        &:hover {
+          background: $secondary_color;
+          color: $primary_color;
+        }
       }
     }
   }
