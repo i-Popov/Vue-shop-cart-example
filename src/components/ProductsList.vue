@@ -14,8 +14,8 @@
              :style="'background:'+color"></a>
         </div>
         <div class="filter__box">
-          <input v-model.number="minPrice" type="number" />
-          <input v-model.number="maxPrice" type="number" />
+          <input v-model.number="minPrice"/>
+          <input v-model.number="maxPrice" />
         </div>
       </div>
     </div>
@@ -57,18 +57,17 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import _ from 'lodash';
 import Button from './Button';
 
 export default {
   props: ['products', 'colors'],
 
-  data() {
-    return {
-      minPrice: 1000,
-      maxPrice: 46000,
-    };
-  },
+  // data() {
+  //   return {
+  //     minPrice: 1000,
+  //     maxPrice: 46000,
+  //   };
+  // },
 
   components: {
     Button,
@@ -77,7 +76,25 @@ export default {
   computed: {
     ...mapGetters([
       'getFiltersApplied',
+      'getMinPrice',
+      'getMaxPrice',
     ]),
+    minPrice: {
+      get() {
+        return this.getMinPrice;
+      },
+      set(cost) {
+        this.loadMinPrice(cost);
+      },
+    },
+    maxPrice: {
+      get() {
+        return this.getMaxPrice;
+      },
+      set(cost) {
+        this.loadMaxPrice(cost);
+      },
+    },
 
     filteredItems() {
       return this.products
@@ -99,14 +116,9 @@ export default {
       'currentProduct',
       'onFilter',
       'offFilter',
+      'loadMinPrice',
+      'loadMaxPrice',
     ]),
-
-    getMinPrice() {
-      return Number(_.minBy(this.products, 'cost').cost);
-    },
-    getMaxPrice() {
-      return Number(_.maxBy(this.products, 'cost').cost);
-    },
 
     setActive(product) {
       if (this.getFiltersApplied.indexOf(product) > -1) {

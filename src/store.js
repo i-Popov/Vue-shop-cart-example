@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import _ from 'lodash';
 
 Vue.use(Vuex);
 
@@ -67,6 +68,8 @@ export default new Vuex.Store({
     currentProduct: {},
     showPopupCart: false,
     colors: ['black', 'white', 'blue', 'red'],
+    minPrice: '',
+    maxPrice: '',
   },
 
   getters: {
@@ -76,8 +79,8 @@ export default new Vuex.Store({
     getFiltersApplied: state => state.filtersApplied,
     getCurrentProduct: state => state.currentProduct,
     getPopupCart: state => state.showPopupCart,
-    // getMinPrice: state => state.minPrice,
-    // getMaxPrice: state => state.maxPrice,
+    getMinPrice: state => state.minPrice,
+    getMaxPrice: state => state.maxPrice,
   },
 
   mutations: {
@@ -102,6 +105,13 @@ export default new Vuex.Store({
     CLEAR_CART: (state) => {
       state.cartProducts = [];
     },
+    LOAD_MIN_PRICE: (state, payload) => {
+      state.minPrice = payload;
+      // localStorage.setItem('name', state.minPrice);
+    },
+    LOAD_MAX_PRICE: (state, payload) => {
+      state.maxPrice = payload;
+    },
   },
 
   actions: {
@@ -125,6 +135,12 @@ export default new Vuex.Store({
     },
     clearCartProducts: (context, state) => {
       context.commit('CLEAR_CART', state);
+    },
+    loadMinPrice: (context, payload) => {
+      context.commit('LOAD_MIN_PRICE', payload);
+    },
+    loadMaxPrice: (context, payload) => {
+      context.commit('LOAD_MAX_PRICE', payload);
     },
   },
 });
