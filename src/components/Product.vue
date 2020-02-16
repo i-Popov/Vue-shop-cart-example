@@ -1,29 +1,25 @@
 <template>
-  <div class="product-box">
-    <div class="product-image">
-      <img :src="currentProduct.img" alt="">
+  <section class="product">
+    <div class="product__container">
+      <div class="product__image">
+        <img :src="currentProduct.img" alt="">
+      </div>
+      <div class="product__info">
+        <h2 class="product__title">{{ currentProduct.title }}</h2>
+        <span>{{ currentProduct.description }}</span>
+        <span class="product__price">{{ currentProduct.cost.toLocaleString() }} ₽</span>
+        <button class="product__button" @click="addProductToCart(currentProduct)">
+          Купить сейчас
+        </button>
+      </div>
     </div>
-    <div class="product-info">
-      <h2 class="product-title">{{ currentProduct.title }}</h2>
-      <span class="product-price">{{ currentProduct.cost.toLocaleString() }} ₽</span>
-      <Button btnColor="btn btn-large btn-sucess" :cartIcon="true"
-      @click.native="addProductToCart(currentProduct)">
-        Купить сейчас
-      </Button>
-      <span>{{ currentProduct.description }}</span>
-    </div>
-  </div>
+  </section>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import Button from './Button';
 
 export default {
-  components: {
-    Button,
-  },
-
   computed: {
     ...mapGetters({
       currentProduct: 'getCurrentProduct',
@@ -43,39 +39,55 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .product-box {
-    width: 800px;
-    height: 400px;
-    margin: 50px auto;
-    box-sizing: border-box;
-    padding: 1.5em;
-    background-color: #fff;
-    border-radius: 7px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-  }
+  @import "../assets/resources";
 
-  .product-image {
-    width: 300px;
-  }
+  .product {
+    width: 100%;
+    min-height: calc(100vh - 180px);
 
-  .product-info {
-    width: 400px;
-    align-self: flex-start;
-  }
+    &__container {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      padding: 50px 0;
+      flex-direction: column;
 
-  .product-title {
-    font-weight: normal;
-  }
+      @media (min-width: $tb_bp) {
+        flex-direction: row;
+        padding: 100px 0;
+      }
+    }
 
-  .product-price {
-    font-size: 2em;
-    font-weight: bolder;
-  }
+    &__image img {
+      width: 100%;
+      max-width: 360px;
+    }
 
-  .product-box button {
-    width: 300px;
-    margin: .3em 0;
+    &__info {
+      display: flex;
+      flex-direction: column;
+      width: 50%;
+    }
+
+    &__price {
+      font-size: 30px;
+      margin: 20px 0;
+    }
+
+    &__button {
+      background-color: transparent;
+      border: 1px solid black;
+      padding: 14px 0;
+      cursor: pointer;
+      margin: 20px 0;
+      transition: 0.2s;
+
+      &:hover {
+        color: $primary_color;
+        background: $secondary_color;
+      }
+    }
   }
 </style>

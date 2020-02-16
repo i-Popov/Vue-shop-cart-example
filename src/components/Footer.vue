@@ -40,6 +40,10 @@ export default {
       justify-content: space-between;
       position: relative;
 
+      @media (min-width: $sp_bp) {
+        max-width: 768px;
+      }
+
       @media (min-width: $tb_bp) {
         max-width: 1200px;
       }
@@ -71,6 +75,7 @@ export default {
       a {
         margin-left: 16px;
       }
+
       img {
         vertical-align: middle;
       }

@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import _ from 'lodash';
 
 Vue.use(Vuex);
 
@@ -104,6 +105,15 @@ export default new Vuex.Store({
     CLEAR_CART: (state) => {
       state.cartProducts = [];
     },
+    RESET_FILTER: (state) => {
+      state.filtersApplied = [];
+      state.minPrice = (state.items.length
+        ? Number(_.minBy(state.items, 'cost').cost)
+        : 0);
+      state.maxPrice = (state.items.length
+        ? Number(_.maxBy(state.items, 'cost').cost)
+        : 0);
+    },
     LOAD_MIN_PRICE: (state, payload) => {
       state.minPrice = payload;
     },
@@ -139,6 +149,9 @@ export default new Vuex.Store({
     },
     loadMaxPrice: (context, payload) => {
       context.commit('LOAD_MAX_PRICE', payload);
+    },
+    resetFilter: (context, state) => {
+      context.commit('RESET_FILTER', state);
     },
   },
 });

@@ -9,13 +9,11 @@
 <script>
 import { Fragment } from 'vue-fragment';
 import Header from './components/Header';
-import Button from './components/Button';
 import Footer from './components/Footer';
 
 export default {
   components: {
     Header,
-    Button,
     Footer,
     Fragment,
   },

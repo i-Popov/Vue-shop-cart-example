@@ -27,7 +27,10 @@
     </div>
     <div class="products">
       <div class="products__container">
-        <h3 v-if='filteredItems.length === 0'>Товар не найден</h3>
+        <div v-if='filteredItems.length === 0'>
+          <h3>Товар не найден</h3>
+          <button class="product__button" @click="resetFilter">Сбросить фильтр</button>
+        </div>
         <div class="product" v-for="(product, index) in filteredItems" :key="index">
           <div class="product__img">
             <img :src="product.img" alt="">
@@ -52,9 +55,9 @@
               {{ product.cost.toLocaleString() }} ₽
             </div>
           </div>
-          <Button class="product__button" @click.native="addProductToCart(product)">
+          <button class="product__button" @click="addProductToCart(product)">
             В корзину
-          </Button>
+          </button>
         </div>
       </div>
     </div>
@@ -63,14 +66,9 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import Button from './Button';
 
 export default {
   props: ['products', 'colors'],
-
-  components: {
-    Button,
-  },
 
   computed: {
     ...mapGetters([
@@ -114,6 +112,7 @@ export default {
       'offFilter',
       'loadMinPrice',
       'loadMaxPrice',
+      'resetFilter',
     ]),
 
     setActive(product) {
@@ -218,7 +217,7 @@ export default {
       &:hover,
       &.selected {
         background: $secondary_color3;
-        box-shadow: inset 0 0 0 3px $secondary_color3;
+        box-shadow: inset 0 0 0 3px #b5b5b5b3;
       }
     }
   }
@@ -229,18 +228,21 @@ export default {
 
     &__container {
       width: 100%;
-      padding: 50px 20px;
+      padding: 50px 0;
       margin: 0 auto;
-      display: flex;
-      align-items: stretch;
-      justify-content: center;
       position: relative;
-      flex-wrap: wrap;
+      display: grid;
+      grid-template-columns: 1fr;
+
+      @media (min-width: $sp_bp) {
+        max-width: 788px;
+        grid-template-columns: 1fr 1fr;
+      }
 
       @media (min-width: $tb_bp) {
         max-width: 1200px;
-        justify-content: space-between;
-        padding: 90px 20px;
+        padding: 90px 0;
+        grid-template-columns: 1fr 1fr 1fr;
       }
     }
 
@@ -253,6 +255,11 @@ export default {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      margin: 0 auto 50px;
+
+      @media (min-width: $sp_bp) {
+        margin: 0 auto;
+      }
 
       &__img img {
         width: 100%;
@@ -303,7 +310,7 @@ export default {
       }
 
       &__button {
-        padding: 13px 0;
+        padding: 13px 60px;
         background-color: $primary_color;
         border: 1px solid $secondary_color;
         font-weight: 600;
